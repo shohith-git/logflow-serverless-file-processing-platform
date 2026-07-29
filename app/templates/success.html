@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Successful</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="success-card">
+
+        <h1>✅ Upload Successful</h1>
+
+        <p class="success-message">
+            Hello <strong>{{ name }}</strong>,
+        </p>
+
+        <p>
+            Your server log has been uploaded successfully.
+        </p>
+
+        <div class="summary-box">
+
+            <h3>Upload Summary</h3>
+
+            <p><strong>Name :</strong> {{ name }}</p>
+
+            <p><strong>Email :</strong> {{ email }}</p>
+
+            <p><strong>Uploaded File :</strong> {{ filename }}</p>
+
+            <p><strong>Requested Report :</strong> {{ report_format }}</p>
+
+            <p>
+                <strong>Status :</strong>
+                Queued for AWS Processing
+            </p>
+
+        </div>
+
+        <p class="note">
+            Your analysis report will be securely delivered
+            to your email after processing.
+        </p>
+
+        <a href="/" class="upload-btn">
+            Upload Another Log
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

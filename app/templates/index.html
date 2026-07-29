@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogFlow | Serverless Event-Driven Log Processing Platform</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="upload-card">
+
+            <h1>LogFlow</h1>
+
+            <h2>Serverless Event-Driven Log Processing Platform</h2>
+
+            <p class="description">
+                Upload your server log file to initiate an automated AWS serverless
+                processing pipeline. The uploaded log will be validated, processed,
+                summarized, and securely stored in the cloud.
+            </p>
+
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter your full name"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email address"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="logFile">Upload Server Log</label>
+                    <input
+                        type="file"
+                        id="logFile"
+                        name="logFile"
+                        accept=".log"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label>Analysis Report Format</label>
+
+                    <div class="radio-group">
+
+                        <label>
+                            <input
+                                type="radio"
+                                name="report_format"
+                                value="pdf"
+                                required>
+                            PDF
+                        </label>
+
+                        <label>
+                            <input
+                                type="radio"
+                                name="report_format"
+                                value="json">
+                            JSON
+                        </label>
+
+                    </div>
+                </div>
+
+                <button type="submit" class="upload-btn">
+                    Upload Server Log
+                </button>
+
+            </form>
+
+            <div class="note">
+                <p><strong>Supported Format:</strong> .log</p>
+                <p><strong>Maximum File Size:</strong> 10 MB</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

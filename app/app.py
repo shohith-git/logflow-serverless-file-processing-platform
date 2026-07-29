@@ -1,16 +1,12 @@
 from flask import Flask, render_template, request
 import os
 from werkzeug.utils import secure_filename
+from s3_config import s3, UPLOAD_BUCKET
+import uuid
 
 app = Flask(__name__)
 
-UPLOAD_FOLDER = "uploads"
 ALLOWED_EXTENSIONS = {"log"}
-
-app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-
 
 def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -49,15 +45,21 @@ def upload_file():
         )
 
     filename = secure_filename(file.filename)
-    file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+    unique_filename = f"incoming/{uuid.uuid4()}_{filename}"
+
+    s3.upload_fileobj(
+    Fileobj=file,
+    Bucket=UPLOAD_BUCKET,
+    Key=unique_filename
+)
 
     return render_template(
-        "success.html",
-        name=name,
-        email=email,
-        filename=filename,
-        report_format=report_format.upper()
-    )
+    "success.html",
+    name=name,
+    email=email,
+    filename=unique_filename,
+    report_format=report_format.upper()
+)
 
 
 @app.route("/error")

@@ -1,0 +1,5 @@
+2026-07-29 11:15:10 INFO Server started on port 5000
+2026-07-29 11:16:01 INFO GET /index 200
+2026-07-29 11:16:05 INFO POST /upload 200
+2026-07-29 11:16:15 ERROR Database connection timeout
+2026-07-29 11:16:30 INFO Request completed

@@ -1,12 +1,16 @@
 from flask import Flask, render_template, request
-import os
 from werkzeug.utils import secure_filename
 from s3_config import s3, UPLOAD_BUCKET
 import uuid
 
+
 app = Flask(__name__)
 
+# Maximum upload size: 10 MB
+app.config["MAX_CONTENT_LENGTH"] = 10 * 1024 * 1024
+
 ALLOWED_EXTENSIONS = {"log"}
+
 
 def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -48,18 +52,26 @@ def upload_file():
     unique_filename = f"incoming/{uuid.uuid4()}_{filename}"
 
     s3.upload_fileobj(
-    Fileobj=file,
-    Bucket=UPLOAD_BUCKET,
-    Key=unique_filename
-)
+        Fileobj=file,
+        Bucket=UPLOAD_BUCKET,
+        Key=unique_filename
+    )
 
     return render_template(
-    "success.html",
-    name=name,
-    email=email,
-    filename=unique_filename,
-    report_format=report_format.upper()
-)
+        "success.html",
+        name=name,
+        email=email,
+        filename=unique_filename,
+        report_format=report_format.upper()
+    )
+
+
+@app.errorhandler(413)
+def request_entity_too_large(error):
+    return render_template(
+        "error.html",
+        message="The uploaded file is too large. Maximum file size is 10 MB."
+    ), 413
 
 
 @app.route("/error")

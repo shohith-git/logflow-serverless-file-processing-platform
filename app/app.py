@@ -31,6 +31,8 @@ def upload_file():
     email = request.form.get("email")
     report_format = request.form.get("report_format")
 
+    print(f"SELECTED REPORT FORMAT FROM WEBSITE: {report_format}")
+
     if "logFile" not in request.files:
         return render_template(
             "error.html",

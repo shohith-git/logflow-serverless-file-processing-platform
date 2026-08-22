@@ -13,7 +13,10 @@ ALLOWED_EXTENSIONS = {"log"}
 
 
 def allowed_file(filename):
-    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+    return (
+        "." in filename
+        and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+    )
 
 
 @app.route("/")
@@ -48,13 +51,29 @@ def upload_file():
             message="Only .log files are allowed."
         )
 
+    if not email:
+        return render_template(
+            "error.html",
+            message="Email address is required."
+        )
+
     filename = secure_filename(file.filename)
+
     unique_filename = f"incoming/{uuid.uuid4()}_{filename}"
 
+    # Store the user's email as S3 object metadata.
+    # The validation Lambda will read this metadata
+    # and pass the email through SQS to the processing Lambda.
     s3.upload_fileobj(
         Fileobj=file,
         Bucket=UPLOAD_BUCKET,
-        Key=unique_filename
+        Key=unique_filename,
+        ExtraArgs={
+            "Metadata": {
+                "email": email,
+                "report_format": report_format
+            }
+        }
     )
 
     return render_template(

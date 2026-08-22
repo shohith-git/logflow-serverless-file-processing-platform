@@ -1,8 +1,81 @@
-# Virtual Environment
-app/venv/
-
-# Python Cache
+# ==============================
+# Python
+# ==============================
 __pycache__/
+*.py[cod]
+*.pyo
 
-# Environment Variables
+# ==============================
+# Virtual Environment
+# ==============================
+venv/
+.venv/
+env/
+ENV/
+
+# ==============================
+# Environment / Secrets
+# ==============================
 .env
+.env.*
+!.env.example
+
+# ==============================
+# Terraform
+# ==============================
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+
+# Terraform variables may contain secrets
+*.tfvars
+*.tfvars.json
+
+# ==============================
+# Terraform generated files
+# ==============================
+*.tfplan
+
+# ==============================
+# Lambda generated packages
+# ==============================
+*.zip
+
+# ==============================
+# AWS generated / temporary files
+# ==============================
+*_logs.txt
+*_url.txt
+
+# ==============================
+# Docker
+# ==============================
+.docker/
+
+# ==============================
+# VS Code
+# ==============================
+.vscode/
+
+# ==============================
+# OS generated files
+# ==============================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ==============================
+# Python test/cache files
+# ==============================
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ==============================
+# Build / distribution
+# ==============================
+build/
+dist/
+*.egg-info/
